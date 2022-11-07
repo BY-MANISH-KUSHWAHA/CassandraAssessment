@@ -28,6 +28,8 @@ public class ConsumerController {
 //    @Autowired
     MovieRestConsumer movieRestConsumer;
 
+    // Add EmployeeRestController empRestConsumer
+
     @Autowired
     public ConsumerController(UserRestConsumer restConsumer, AuthRestConsumer authRestConsumer, MovieRestConsumer movieRestConsumer) {
         this.restConsumer = restConsumer;
