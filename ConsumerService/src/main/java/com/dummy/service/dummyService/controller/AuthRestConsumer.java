@@ -10,4 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface AuthRestConsumer {
     @GetMapping(value="/getToken/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public String createToken(@PathVariable("id") int id);
+
+    @GetMapping("/getUserId/{token}")
+    public String getUserIdFromToken(@PathVariable("token") String token);
 }

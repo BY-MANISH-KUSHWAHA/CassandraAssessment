@@ -83,5 +83,9 @@ public class ConsumerController {
         return employeeRestConsumer.deleteEmployeeById(id);
     }
 
+    @GetMapping("/getUserId/{token}")
+    public String getUsedId(@PathVariable("token") String token){
+        return authRestConsumer.getUserIdFromToken(token);
+    }
 
 }

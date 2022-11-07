@@ -14,70 +14,45 @@ import java.util.Date;
 
 @Service
 public class TokenService {
-    public static final String Token_Secrete = "always_put_random_string_like_mkk9313";
-
+    public static final String token_secret = "quei083nr8fjfh345q98m4aioweuf1";
     public String createToken(int userId){
         try {
-            //Random Generating String Using with Token Secret.
-            //We are using HMAC256 Algo. to generate the Token
-            Algorithm algorithm = Algorithm.HMAC256(Token_Secrete);
-
-            // We are using claims of Id and Created Date using Data Object.
-            String token = JWT.
+            // Random generating String using with Token Secret.
+            // We are using HMAC256 Algorithms to generate the token
+            Algorithm algorithm = Algorithm.HMAC256(token_secret);
+            // We are using claims of userId and create Date using Date() object
+            String token =  JWT.
                     create().
-                    withClaim("userId",userId).
-                    withClaim("createdAt",new Date()).
+                    withClaim("userId", Integer.toString(userId)).
+                    withClaim("createdAt", new Date()).
                     sign(algorithm);
+            System.out.println(getUserIdFromToken(token));
+            System.out.println(token);
             return token;
-        }
-        catch(UnsupportedEncodingException exception){
-            exception.printStackTrace();
-        }
-        catch (JWTCreationException exception){
-            exception.printStackTrace();
-        }
-        catch (Exception e){
-            System.out.println(e);
+        } catch (UnsupportedEncodingException | JWTCreationException e){
+            e.printStackTrace();
         }
         return null;
     }
 
-
-
+    // Decoding the created token
     public String getUserIdFromToken(String token){
-        try{
-            Algorithm algorithm = Algorithm.HMAC256(Token_Secrete);
+        System.out.println("///////////////this token//////////////////"+token);
+        //token = token.substring(4);
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(token_secret);
             JWTVerifier jwtVerifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
-            System.out.println(decodedJWT.getClaim("userId").asString());
             return decodedJWT.getClaim("userId").asString();
+        } catch (UnsupportedEncodingException | JWTCreationException e){
+            e.printStackTrace();
         }
-        catch(UnsupportedEncodingException exception){
-            exception.printStackTrace();
-        }
-        catch(JWTDecodeException exception){
-            //exception.printStackTrace();
-            System.out.println("Wrong Token/ Token is Expired.");
-        }
-
         return null;
     }
 
-
-    public String isTokenValid(String token){
+    public boolean isTokenValid(String token){
         String userId = this.getUserIdFromToken(token);
-        if(userId != null){
-            return "{" +
-                    "\"message\":"+"\"Token is valid and User Id is "+userId+"\","+
-                    "\"token\":\""+token+"\"," +
-                    "\"status\":true}";
-        }
-        else{
-            return "{" +
-                    "\"message\":"+"\"Token is invalid\","+
-                    "\"token\":\""+token+"\"," +
-                    "\"status\":true}";
-        }
+        return  userId != null;
     }
 }
 

@@ -1,7 +1,9 @@
 package com.dummy.service.dummyService.JWTFilter;
 
-import com.dummy.service.dummyService.service.TokenService;
+import com.dummy.service.dummyService.controller.AuthRestConsumer;
+import com.dummy.service.dummyService.controller.ConsumerController;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -17,12 +19,10 @@ import java.io.IOException;
 public class JWTFilter extends GenericFilterBean {
 
 
-    private TokenService tokenService;
 
-    public JWTFilter(TokenService tokenService) {
-        this.tokenService = tokenService;
+    @Autowired
+    private ConsumerController controller;
 
-    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
@@ -41,7 +41,11 @@ public class JWTFilter extends GenericFilterBean {
         }
         else{
             try{
-                ObjectId userId = new ObjectId(tokenService.getUserIdFromToken(token));
+                System.out.println(token+"     ------------------------");
+                System.out.println(controller.getUsedId(token));
+
+                ObjectId userId = new ObjectId(controller.getUsedId(token));
+                System.out.println(userId+"%%%%%%%%%%%%%%%%%%");
                 httpServletRequest.setAttribute("userId",userId);
             }
             catch (IllegalArgumentException exception){

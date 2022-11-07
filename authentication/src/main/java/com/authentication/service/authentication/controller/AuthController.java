@@ -28,6 +28,11 @@ public class AuthController {
                 "\"token\":\""+tokenService.createToken(id)+"\"}";
     }
 
+    @GetMapping("/getUserId/{token}")
+    public String getUserIdFromToken(@PathVariable("token") String token){
+        return tokenService.getUserIdFromToken(token);
+    }
+
 
 
 
