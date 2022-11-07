@@ -1,23 +1,30 @@
 package com.dummy.service.dummyService.model;
 
-
 public class EmployeeModel {
 
     private int id;
-
     private String name;
     private String email;
     private String state;
+    private String password;
 
 
 
 
-
-    public EmployeeModel(int id, String name, String email, String state) {
+    public EmployeeModel(int id, String name, String email, String state,String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.state = state;
+        this.password=password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public EmployeeModel() {
@@ -65,4 +72,3 @@ public class EmployeeModel {
                 '}';
     }
 }
-

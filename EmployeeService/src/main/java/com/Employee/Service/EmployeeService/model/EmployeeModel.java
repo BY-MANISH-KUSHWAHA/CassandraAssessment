@@ -4,7 +4,7 @@ package com.Employee.Service.EmployeeService.model;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table("employee")
+@Table("employee_new")
 public class EmployeeModel {
     @PrimaryKey
     private int id;
@@ -13,15 +13,25 @@ public class EmployeeModel {
     private String email;
     private String state;
 
+    private String password;
 
 
 
 
-    public EmployeeModel(int id, String name, String email, String state) {
+    public EmployeeModel(int id, String name, String email, String state,String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.state = state;
+        this.password=password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public EmployeeModel() {
